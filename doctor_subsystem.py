@@ -55,18 +55,3 @@ class Medication:
         }
         
         
-        
-        
-def test_connection():
-    try:
-        conn = get_db_connection()
-        if conn.is_connected():
-            print("Connection to the database was successful!")
-    except Exception as e:
-        print(f"Failed to connect to the database: {e}")
-    finally:
-        if conn.is_connected():
-            conn.close()
-            print("Database connection closed.")
-
-test_connection()
