@@ -12,7 +12,7 @@ CREATE TABLE patients (
 CREATE TABLE medications (
     medication_id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
-    name VARCHAR(100),
+    medication_name VARCHAR(100),
     dosage VARCHAR(50),
     frequency INT,
     frequency_unit ENUM('days', 'hours', 'minutes'),
