@@ -1,6 +1,7 @@
-
 from enum import Enum
 from DB import get_db_connection
+from mysql.connector import Error
+
 
 
 class FrequencyUnit(Enum):
@@ -28,10 +29,10 @@ class Patient:
         }
 
 class Medication:
-    def __init__(self, medication_id, patient_id, name, dosage, frequency, frequency_unit, start_date, end_date, notes):
+    def __init__(self, medication_id, patient_id, medication_name, dosage, frequency, frequency_unit, start_date, end_date, notes):
         self.medication_id = medication_id
         self.patient_id = patient_id
-        self.name = name
+        self.medication_name = medication_name
         self.dosage = dosage
         self.frequency = frequency
         if frequency_unit not in FrequencyUnit._value2member_map_:
@@ -45,7 +46,7 @@ class Medication:
         return {
             "medication_id": self.medication_id,
             "patient_id": self.patient_id,
-            "name": self.name,
+            "medication_name": self.medication_name,
             "dosage": self.dosage,
             "frequency": self.frequency,
             "frequency_unit": self.frequency_unit,
@@ -54,4 +55,29 @@ class Medication:
             "notes": self.notes
         }
         
+    def add_medication(patient_id, medication_name, dosage, frequency, frequency_unit, start_date, end_date, notes):
+        try:
+            # Connect to DB
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            # Insert medication data into DB
+            cursor.execute("""
+                INSERT INTO medications (patient_id, medication_name, dosage, frequency, frequency_unit, start_date, end_date, notes)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (patient_id, medication_name, dosage, frequency, frequency_unit, start_date, end_date, notes))
+        
+            # Commit
+            conn.commit()
+            print("Medication added successfully!")
+    
+        except Error as e:
+            print(f"Database error: {e}")
+        except ValueError as ve:
+            print(f"Validation error: {ve}")
+        finally:
+            # Ensure the connection is closed
+            if 'conn' in locals() and conn.is_connected():
+                conn.close()
+
         
