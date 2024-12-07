@@ -3,12 +3,10 @@ from DB import get_db_connection
 from mysql.connector import Error
 
 
-
 class FrequencyUnit(Enum):
     DAYS = "days"
     HOURS = "hours"
     MINUTES = "minutes"
-
 
 class Patient:
     def __init__(self, patient_id, first_name, last_name, age, weight_kg):
@@ -107,4 +105,6 @@ class Medication:
             if conn.is_connected():
                 conn.close()
 
+        
+        
         
