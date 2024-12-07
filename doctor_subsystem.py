@@ -27,6 +27,32 @@ class Patient:
             "age": self.age,
             "weight_kg": self.weight_kg
         }
+        
+    def add_patient(first_name, last_name, age, weight_kg):
+        conn = None
+        try:
+            # Connect to the DB
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            # Insert patient data into DB
+            cursor.execute("""
+                INSERT INTO patients (first_name, last_name, age, weight_kg)
+                VALUES (%s, %s, %s, %s)
+            """, (first_name, last_name, age, weight_kg))
+
+            # Commit
+            conn.commit()
+            print("Patient added successfully!")
+        
+        except Error as e:
+            print(f"Database error: {e}")
+        
+        finally:
+            # Safely close the connection if it was opened
+            if conn.is_connected():
+                conn.close()        
+        
 
 class Medication:
     def __init__(self, medication_id, patient_id, medication_name, dosage, frequency, frequency_unit, start_date, end_date, notes):
@@ -56,6 +82,7 @@ class Medication:
         }
         
     def add_medication(patient_id, medication_name, dosage, frequency, frequency_unit, start_date, end_date, notes):
+        conn = None
         try:
             # Connect to DB
             conn = get_db_connection()
@@ -76,8 +103,8 @@ class Medication:
         except ValueError as ve:
             print(f"Validation error: {ve}")
         finally:
-            # Ensure the connection is closed
-            if 'conn' in locals() and conn.is_connected():
+            # Close connection
+            if conn.is_connected():
                 conn.close()
 
         
