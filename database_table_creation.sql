@@ -16,8 +16,6 @@ CREATE TABLE medications (
     dosage VARCHAR(50),
     frequency INT,
     frequency_unit ENUM('days', 'hours', 'minutes'),
-    start_date DATE,
-    end_date DATE,
     notes TEXT,
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE
 );
