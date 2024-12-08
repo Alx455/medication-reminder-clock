@@ -457,14 +457,14 @@ def lookup_patient_screen():
             }
 
             # Define file name and save in current directory
-            file_name = f"patient_{patient_id}_data.json"
+            file_name = f"patient_data.json"
             file_path = os.path.join(os.getcwd(), file_name)
 
             # Write data to JSON file
             with open(file_path, "w") as json_file:
                 json.dump(patient_data, json_file, indent=4)
 
-            messagebox.showinfo("Success", f"Patient data exported successfully to {file_path}")
+            messagebox.showinfo("Success", f"Patient data successfully exported")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while exporting data: {str(e)}")
 
@@ -498,7 +498,7 @@ tk.Label(root, text="Welcome to the Patient Management System", font=("Arial", 1
 btn_add_patient = tk.Button(root, text="Add a Patient", width=20, command=add_patient_screen)
 btn_add_patient.pack(pady=10)
 
-btn_lookup_patient = tk.Button(root, text="Lookup Patient by ID", width=20, command=lookup_patient_screen)
+btn_lookup_patient = tk.Button(root, text="View Patients", width=20, command=lookup_patient_screen)
 btn_lookup_patient.pack(pady=10)
 
 btn_exit = tk.Button(root, text="Exit", width=20, command=root.quit)
