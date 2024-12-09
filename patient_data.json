@@ -1,0 +1,33 @@
+{
+    "Patient ID": 1,
+    "First Name": "Bob",
+    "Last Name": "Tr",
+    "Age": 60,
+    "Weight (kg)": "75.00",
+    "Medications": [
+        {
+            "Medication ID": 8,
+            "Name": "Ibuprofen",
+            "Dosage": "12mg",
+            "Frequency": 2,
+            "Frequency Unit": "days",
+            "Notes": "Dont drink"
+        },
+        {
+            "Medication ID": 9,
+            "Name": "Tylenol",
+            "Dosage": "20mg",
+            "Frequency": 18,
+            "Frequency Unit": "hours",
+            "Notes": ""
+        },
+        {
+            "Medication ID": 10,
+            "Name": "Bananas",
+            "Dosage": "2mg",
+            "Frequency": 1,
+            "Frequency Unit": "minutes",
+            "Notes": "test"
+        }
+    ]
+}
