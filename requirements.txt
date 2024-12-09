@@ -1,6 +1,4 @@
 aiofiles==24.1.0
-# Editable install with no version control (alejandro_calculator_8262==0.1.0)
--e c:\users\lenovo\desktop\school\sjsu\fall 2024\cs 122\alejandro_calculator
 blinker==1.8.2
 certifi==2024.7.4
 charset-normalizer==3.3.2
@@ -32,6 +30,8 @@ packaging==24.1
 pandas==2.2.2
 pillow==10.4.0
 pkginfo==1.10.0
+playsound==1.3.0
+pygame==2.6.1
 Pygments==2.18.0
 pyparsing==3.1.4
 python-dateutil==2.9.0.post0
