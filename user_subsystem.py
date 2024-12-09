@@ -7,7 +7,7 @@ import pygame
 
 
 
-
+# Function to read patient_data from JSON file into an array that will store all medications for the patient
 def read_patient_data(json_file):
     try:
         with open(json_file, 'r') as file:
@@ -23,41 +23,39 @@ def read_patient_data(json_file):
         return []
   
   
+# Play alarm audio until user clicks OK on popup message
 def alarm():
     pygame.mixer.init()
     # Load alarm sound
     pygame.mixer.music.load("alarm.mp3")
     # Play the alarm sound in a loop
     pygame.mixer.music.play(loops=-1)
-
     # Show the messagebox
     messagebox.showinfo("Medication Reminder", f"Time to take: {med['Name']} (Dosage: {med['Dosage']})")
-
     # Stop the alarm when the user clicks "OK"
     pygame.mixer.music.stop()
     pygame.mixer.quit()
   
     
 def update_clock():
-    # Get the current time in HH:MM:SS format
+    # Get the current date and time
     current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
-    # parse current time to get only time and not date
-    clock_label.config(text=current_datetime.split(' ')[1])  # Show only HH:MM:SS
-    
-    # Check if the current time matches any "Next Dose" in medications
+    # parse current datetime to get only time in HH:MM:SS format
+    clock_label.config(text=current_datetime.split(' ')[1])
+    # Check Next Dose any medication matches the current date and time(medication needs to be taken)
     for med in medications:
+        # Ring alarm if medication needs to be taken
         if 'Next Dose' in med and med['Next Dose'] == current_datetime:
-            # Notify user about the medication
             alarm()
-            update_doses(medications)
-            update_text_widget()
-            
-    
+            # Update Next Dose of the medication whose alarm rang
+            update_next_doses(medications)
+            # Update the display of medications to show new Next Dose
+            update_text_widget()     
     # Schedule the function to run again after 1 second
     clock_label.after(1000, update_clock)
     
     
+# Function to set the Next Dose of all medications when a user first opens the app
 def initialize_doses(medications):
     # Empty array to be returned in order to prevent duplicate data
     updated_medications = []   
@@ -87,7 +85,7 @@ def initialize_doses(medications):
             print(f"Error processing medication: {e}")
     return updated_medications
     
-def update_doses(medications):
+def update_next_doses(medications):
     # Empty array to be returned in order to prevent duplicate data
     updated_medications = []   
     for med in medications:
@@ -138,7 +136,7 @@ def update_text_widget():
 
 medications = read_patient_data("patient_data.json")
 # File does not initially have a next dose fields, the first call of this function
-# calculates the next dose based on the exact time that this funciton is called below
+# calculates the next dose based on the exact time that the app is first opened
 medications = initialize_doses(medications)
 
 
@@ -157,11 +155,12 @@ root.columnconfigure(3, weight=1)
 root.rowconfigure(3, weight=1)
 root.columnconfigure(3, weight=1)
 
-# Create a label to display the time
+# Create a label to display the clock
 clock_label = tk.Label(root, font=('Arial', 48), fg='black')
 clock_label.grid(row=0, column=0, rowspan=1, columnspan=3, sticky="nsew", padx=5, pady=5)
 
 
+# Create a frame to place the medications list text field
 frame = tk.Frame(root)
 frame.grid(row=2, column=0, rowspan=1, columnspan=1, sticky="nsew", padx=10, pady=10)
 # Configure the frame's grid
@@ -184,9 +183,6 @@ text_widget.configure(state="disabled")
 scrollbar = ttk.Scrollbar(frame, orient="vertical", command=text_widget.yview)
 scrollbar.grid(row=0, column=1, sticky="ns")
 text_widget.configure(yscrollcommand=scrollbar.set)
-
-
-
 
 
 # Start clock and run
