@@ -30,12 +30,15 @@ def alarm():
     pygame.mixer.music.load("alarm.mp3")
     # Play the alarm sound in a loop
     pygame.mixer.music.play(loops=-1)
-    # Show the messagebox
-    messagebox.showinfo("Medication Reminder", f"Time to take: {med['Name']} (Dosage: {med['Dosage']})")
-    # Stop the alarm when the user clicks "OK"
+    
+  
+  
+def stop_alarm():
     pygame.mixer.music.stop()
     pygame.mixer.quit()
-  
+    # Hide the alarm button
+    alarm_button.config(state="disabled")
+    
     
 def update_clock():
     # Get the current date and time
@@ -152,8 +155,7 @@ root.rowconfigure(2, weight=2)
 root.columnconfigure(2, weight=2)
 root.rowconfigure(3, weight=1)
 root.columnconfigure(3, weight=1)
-root.rowconfigure(3, weight=1)
-root.columnconfigure(3, weight=1)
+root.columnconfigure(4, weight=1)
 
 # Create a label to display the clock
 clock_label = tk.Label(root, font=('Arial', 48), fg='black')
@@ -183,6 +185,20 @@ text_widget.configure(state="disabled")
 scrollbar = ttk.Scrollbar(frame, orient="vertical", command=text_widget.yview)
 scrollbar.grid(row=0, column=1, sticky="ns")
 text_widget.configure(yscrollcommand=scrollbar.set)
+
+alarm_button = tk.Button(
+    root,
+    text="Pill\nCompartment",
+    font=('Arial', 14),
+    fg='white',
+    bg='red',
+    command=stop_alarm,
+    width=6,
+    height=3,
+)
+alarm_button.grid(row=2, column=2, padx=10, pady=10, sticky="ns")
+
+root.minsize(900, 300)
 
 
 # Start clock and run
