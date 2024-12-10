@@ -24,3 +24,12 @@
     # Exit the MySQL client
     EXIT;
 ```
+## Instructions
+    DOCTOR SUBSYSTEM
+    1) Run doctor_subsystem.py for entering new patients and edisting their medications
+    2) On patient list page, clicking "Export" button will export that patient's
+       medication to a JSON file called "patient_data.json"
+
+    USER SUBSYSTEM
+    1) Ensure "patient_data.json" exists.
+    2) Clock automatically loads patient data.
