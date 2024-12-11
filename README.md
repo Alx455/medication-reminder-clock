@@ -19,7 +19,7 @@
     # Enter your MySQL password when prompted
 
     # Run the SQL file to create the database and tables
-    SOURCE path/to/database_table_creation.sql;
+    SOURCE database_table_creation.sql;
 
     # Exit the MySQL client
     EXIT;
