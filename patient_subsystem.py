@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 import json
-from time import strftime
 from datetime import datetime, timedelta
 import pygame
 
